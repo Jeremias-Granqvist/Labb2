@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Labb2.Elements
 {
-    internal class Wall
+    class Wall : LevelElement
     {
+        //hårdkoda färg "grå"
+        //hårdkoda tecken för "wall" #
     }
 }

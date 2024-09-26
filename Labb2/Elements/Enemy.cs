@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Labb2.Elements
 {
-    internal class Enemy
+    abstract class Enemy : LevelElement
     {
+        //property för "name", "health", "atkDice" (hämtas från Dice), "defDice" (hämtas från Dice)
+        
+        //abstract "Update()"
+
     }
 }

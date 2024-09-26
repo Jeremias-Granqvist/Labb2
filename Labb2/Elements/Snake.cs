@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Labb2.Elements
 {
-    internal class Snake
+    class Snake :Enemy
     {
+        //ärver från "Enemy"
+        //implementerar Update() metod
     }
 }
