@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Labb2
 {
-    internal class Player
+    class Player
     {
+        //hårdkoda följande värden
+        // Player: HP = 100, AttackDice = 2d6+2, DefenceDice = 2d6+0
+
     }
 }

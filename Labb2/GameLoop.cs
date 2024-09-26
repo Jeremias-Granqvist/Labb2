@@ -15,12 +15,15 @@ namespace Labb2
 
         //om det är blockerat av "Wall" flytta inte, attackera inte.
         //om det är blockerat av "Enemy" flytta inte, attackera.
-        //behåll ursprungsposition.
+        //om man blev attackerad förra rundan, attackera tillbaka direkt.
+        //behåll ursprungsposition. 
 
         //utför fiendens drag  (flytta/attackera)
         //om det är blockerat av "Wall" flytta inte, attackera inte.
         //om det är blockerat av "Enemy" flytta inte, attackera inte.
         //om det är blockerat av "Player" flytta inte, attackera.
+        //om den blev attackerad förra rundan, attackera tillbaka.
 
+        //om attack sker, räkna ut skada och uppdatera värden.
     }
 }

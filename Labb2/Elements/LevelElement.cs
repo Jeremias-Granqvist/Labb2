@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Labb2
+﻿namespace Labb2
 {
     abstract class LevelElement
     {
@@ -12,10 +6,18 @@ namespace Labb2
         //ska ha property för X
         //ska ha property för Y
 
+        public char gameElementChar = 'x';
         //char som lagrar vilket tecken en klass ritas ut med, t.ex. # för wall
+
+        public void Draw()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(gameElementChar);
+        }
+        // public "Draw()" metod (utan param) för för att rita upp allt med rätt färg och på rätt plats
         //en consolecolor för vilken färg tecknet skall ha
 
-        // public "Draw()" metod (utan param) för för att rita upp allt med rätt färg och på rätt plats
+
 
 
 

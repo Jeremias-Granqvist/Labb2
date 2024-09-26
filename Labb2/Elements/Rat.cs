@@ -8,7 +8,12 @@ namespace Labb2.Elements
 {
     internal class Rat : Enemy
     {
+
+
         //ärver från "Enemy"
         //implementerar Update() metod
+        
+
+        
     }
 }

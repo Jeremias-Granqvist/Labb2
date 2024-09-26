@@ -10,5 +10,8 @@ namespace Labb2.Elements
     {
         //hårdkoda färg "grå"
         //hårdkoda tecken för "wall" #
+
+        public char wall = '#';
+        ConsoleColor wallColor = ConsoleColor.Gray;
     }
 }
