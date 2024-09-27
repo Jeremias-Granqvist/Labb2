@@ -12,6 +12,11 @@ namespace Labb2.Elements
         //hårdkoda tecken för "wall" #
 
         public char wall = '#';
-        ConsoleColor wallColor = ConsoleColor.Gray;
+        
+
+        public void WallColor()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
     }
 }

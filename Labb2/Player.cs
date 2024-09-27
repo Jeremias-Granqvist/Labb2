@@ -11,5 +11,9 @@ namespace Labb2
         //hårdkoda följande värden
         // Player: HP = 100, AttackDice = 2d6+2, DefenceDice = 2d6+0
 
+        public void playerColor()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+        }
     }
 }

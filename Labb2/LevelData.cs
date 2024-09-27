@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Labb2.Elements;
 
 namespace Labb2
 {
 
-    
+
     class LevelData
     {
-        private List<LevelElement> Elements = new List<LevelElement>();
+        private List<LevelElement> elements = new List<LevelElement>();
+        public string Elements { get; private set; }
+
         //private field "elements" som ska vara en "List<LevelElements>"
 
         //ska exponeras som en public readonly property "elements"
@@ -26,23 +23,39 @@ namespace Labb2
 
         public void Load(string filename)
         {
-            string symbol;
-
             StreamReader lvlData = new StreamReader("C:\\Users\\Taros\\source\\repos\\Labb2\\Labb2\\Levels\\Level1.txt");
+            
+            char currentObject = (char)lvlData.Read();
 
-            symbol = lvlData.ReadLine();
-
-            while (symbol != null)
+            while (lvlData.EndOfStream == false)
             {
-                Console.WriteLine(symbol);
-                symbol = lvlData.ReadLine();
+                if (currentObject == '#')
+                {
+                    Wall wall1 = new Wall();
+                    wall1.WallColor();
+                }
+                if (currentObject == 's')
+                {
+                    Snake snake1 = new Snake();
+                    snake1.snakeColor();
+                }
+                if (currentObject == 'r')
+                {
+                    Rat rat1 = new Rat();
+                    rat1.ratColor();
+                }
+                if (currentObject == '@')
+                {
+                    Player player1 = new Player();
+                    player1.playerColor();
+                } 
 
-                Elements.Add(symbol);
+                Console.Write(currentObject);
+                currentObject = (char)lvlData.Read();
+                Console.ResetColor();
             }
-
             lvlData.Close();
-            Console.ReadLine();
-
+            //Console.ReadLine();
         }
 
     }

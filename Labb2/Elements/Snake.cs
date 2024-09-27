@@ -11,5 +11,11 @@ namespace Labb2.Elements
     {
         //ärver från "Enemy"
         //implementerar Update() metod
+
+
+        public void snakeColor()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
     }
 }

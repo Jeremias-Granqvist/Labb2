@@ -13,7 +13,10 @@ namespace Labb2.Elements
         //ärver från "Enemy"
         //implementerar Update() metod
         
-
+        public void ratColor()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+        }
         
     }
 }
