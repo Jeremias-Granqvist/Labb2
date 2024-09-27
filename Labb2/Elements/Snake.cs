@@ -11,11 +11,23 @@ namespace Labb2.Elements
     {
         //ärver från "Enemy"
         //implementerar Update() metod
+        public char snakeIcon = 's';
 
+        public Snake()
+        {
 
-        public void Draw()
+        }
+
+        public Snake(int x, int y)
+        {
+            this.horizontalPosition = x;
+            this.verticalPosition = y;
+        }
+
+        public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(snakeIcon);
         }
     }
 }

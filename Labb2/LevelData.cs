@@ -17,8 +17,8 @@ namespace Labb2
 
     class LevelData
     {
-        private List<LevelElement> elements = new List<LevelElement>();
-        public LevelElement Elements_ { get; private set; }
+        private List<LevelElement> _elements = new List<LevelElement>();
+        public List<LevelElement> Elements { get { return _elements; } }
 
         char currentObject;
         public void Load(string filename)
@@ -27,44 +27,42 @@ namespace Labb2
             StreamReader lvlData = new StreamReader($"{path}\\Levels\\Level1.txt");
 
             currentObject = (char)lvlData.Read();
-
+            int x = 1;
+            int y = 1;
             while (lvlData.EndOfStream == false)
             {
+                //in med x och y counters som ökar med varje loop av while variabeln
+                x++;
+
+
                 if (currentObject == '#')
                 {
-                    Wall wall1 = new Wall();
-                    wall1.Draw();
-                    Elements();
+                    Wall wall = new Wall(x, y);
+                    _elements.Add(wall);                    
                 }
-                if (currentObject == 's')
-                {
-                    Snake snake1 = new Snake();
-                    snake1.Draw();
-                    Elements();
+                if (currentObject == 's')   
+                {   
+                    Snake snake = new Snake(x, y);  
+                    _elements.Add(snake);
                 }
                 if (currentObject == 'r')
                 {
-                    Rat rat1 = new Rat();
-                    rat1.Draw();
-                    Elements();
+                    Rat rat = new Rat(x, y);
+                    _elements.Add(rat);
                 }
-                if (currentObject == '@')
+                if (currentObject == '@') 
                 {
                     Player player1 = new Player();
-                    player1.playerColor();
-                    Elements();
                 }
-                Console.Write(currentObject);
-
                 currentObject = (char)lvlData.Read();
+                if (currentObject == '\n')
+                {
+                    y++;
+                    x = 0;
+                }
                 Console.ResetColor();
             }
             lvlData.Close();
-        }
-        public void Elements()
-        {
-            Elements_ = currentObject;
-            elements.Add(Elements_);
         }
     }
 }
