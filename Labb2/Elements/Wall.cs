@@ -14,7 +14,7 @@ namespace Labb2.Elements
         public char wall = '#';
         
 
-        public void WallColor()
+        public void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
         }

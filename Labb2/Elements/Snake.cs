@@ -13,7 +13,7 @@ namespace Labb2.Elements
         //implementerar Update() metod
 
 
-        public void snakeColor()
+        public void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Green;
         }

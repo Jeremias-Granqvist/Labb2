@@ -7,10 +7,20 @@
         //ska ha property för Y
 
         public char gameElementChar = 'x';
+        public LevelElement()
+        {
+           
+        }
+        public LevelElement(char gameElementChar)
+        {
+            this.gameElementChar = gameElementChar;
+        }
+
         //char som lagrar vilket tecken en klass ritas ut med, t.ex. # för wall
 
         public void Draw()
         {
+
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(gameElementChar);
         }
@@ -18,7 +28,7 @@
         //en consolecolor för vilken färg tecknet skall ha
 
 
-
+        
 
 
     }
