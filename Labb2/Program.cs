@@ -8,5 +8,3 @@ foreach (var element in game.Elements)
     Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
     element.Draw();
 }
-
-//Console.Write(File.ReadAllText("\\levels\\Level1.txt"));
