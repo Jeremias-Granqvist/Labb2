@@ -9,16 +9,14 @@ namespace Labb2
 {
     struct Position
     {
-        //public int playerPositionX;
-        //public int playerPositionY;
 
-        public int enemyPositionX;
-        public int enemyPositionY;
-        
-        public void getEnemyPosition(int x, int y)
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Position(int x, int y)
         {
-            this.enemyPositionX = x;
-            this.enemyPositionY = y;
+            this.X = x;
+            this.Y = y;
         }
         
         //property för x och y, kan användas för att lagra positioner

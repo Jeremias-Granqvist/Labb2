@@ -8,3 +8,7 @@ foreach (var element in game.Elements)
     Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
     element.Draw();
 }
+GameLoop turn = new GameLoop();
+turn.MovePlayer();
+
+Console.ReadLine();

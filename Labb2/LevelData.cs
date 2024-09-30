@@ -36,9 +36,10 @@ namespace Labb2
                 }
                 if (currentObject == '@')
                 {
-                    Player player1 = new Player();
+                    Player player = new Player(x, y);
                 }
                 currentObject = (char)lvlData.Read();
+
                 if (currentObject == '\n')
                 {
                     y++;
