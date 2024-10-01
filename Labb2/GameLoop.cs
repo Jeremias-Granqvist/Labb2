@@ -3,62 +3,88 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Labb2
 {
     class GameLoop
     {
+        private LevelData _levelData;
 
         public Position Position { get; set; }
         ConsoleKeyInfo keyInput;
 
+        Player player;
+
+
+        public GameLoop(LevelData levelData)
+        {
+            _levelData = levelData;
+
+
+            //iterera min elements loop, när jag hittar min spelare, assigna till fältet player och return.
+            foreach (var element in levelData.Elements)
+            {
+                if (element is Player)
+                {
+                    player = (Player)element;
+                }    
+            }
+
+        }
+
+        
 
         public void MovePlayer()
         {
             do
             {
-                int horizontalPosition = Position.X;
-                int verticalPosition = Position.Y;
+                player.Position = Position;
+
                 keyInput = Console.ReadKey(true);
 
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        Console.SetCursorPosition(horizontalPosition, verticalPosition);
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
                         Console.Write(' ');
-                        verticalPosition--;
-                        Console.SetCursorPosition(Position.X, Position.Y);
+
+                        player.Position.Y--;
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        player.Draw();
+
                         break;
 
                     case ConsoleKey.DownArrow:
-                        Console.SetCursorPosition(Position.X, Position.Y);
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
                         Console.Write(' ');
-                        verticalPosition++;
-                        Console.SetCursorPosition(Position.X, Position.Y);
 
+                        player.Position.Y++;
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        player.Draw();
                         break;
-         
+
                     case ConsoleKey.LeftArrow:
-                        Console.SetCursorPosition(Position.X, Position.Y);
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
                         Console.Write(' ');
-                        horizontalPosition--;
-                        Console.SetCursorPosition(Position.X, Position.Y);
 
+                        player.Position.X--;
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        player.Draw();
                         break;
+
                     case ConsoleKey.RightArrow:
-                        Console.SetCursorPosition(Position.X, Position.Y);
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
                         Console.Write(' ');
-                        horizontalPosition++;
-                        Console.SetCursorPosition(horizontalPosition, verticalPosition);
-                        
+
+                        player.Position.X++;
+                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        player.Draw();
                         break;
+
                     default:
                         break;
-
-
                 }
-
-
             } while (true);
         }
 
@@ -82,8 +108,6 @@ namespace Labb2
         //om den blev attackerad förra rundan, attackera tillbaka.
 
         //om attack sker, räkna ut skada och uppdatera värden.
-        public GameLoop()
-        {
-        }
+        
     }
 }

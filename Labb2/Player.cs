@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Labb2
 {
-    class Player
+    class Player : LevelElement
     {
         public Position Position { get; set; }
 

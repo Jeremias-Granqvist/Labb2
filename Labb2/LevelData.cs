@@ -37,6 +37,7 @@ namespace Labb2
                 if (currentObject == '@')
                 {
                     Player player = new Player(x, y);
+                    _elements.Add(player);
                 }
                 currentObject = (char)lvlData.Read();
 
