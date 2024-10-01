@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Labb2
+﻿namespace Labb2
 {
     class GameLoop
     {
@@ -28,64 +21,63 @@ namespace Labb2
                 if (element is Player)
                 {
                     player = (Player)element;
-                }    
+                }
             }
 
         }
 
-        
+
 
         public void MovePlayer()
         {
+            int x = player.Position.X;
+            int y = player.Position.Y;
+            bool isRunning = true;
             do
             {
-                player.Position = Position;
-
                 keyInput = Console.ReadKey(true);
 
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        Console.SetCursorPosition(x, y);
                         Console.Write(' ');
-
-                        player.Position.Y--;
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        y--;
+                        Console.SetCursorPosition(x, y);
                         player.Draw();
-
                         break;
 
                     case ConsoleKey.DownArrow:
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        Console.SetCursorPosition(x, y);
                         Console.Write(' ');
-
-                        player.Position.Y++;
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        y++;
+                        Console.SetCursorPosition(x, y);
                         player.Draw();
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        Console.SetCursorPosition(x, y);
                         Console.Write(' ');
-
-                        player.Position.X--;
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        x--;
+                        Console.SetCursorPosition(x, y);
                         player.Draw();
                         break;
 
                     case ConsoleKey.RightArrow:
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        Console.SetCursorPosition(x, y);
                         Console.Write(' ');
-
-                        player.Position.X++;
-                        Console.SetCursorPosition(player.Position.X, player.Position.Y);
+                        x++;
+                        Console.SetCursorPosition(x, y);
                         player.Draw();
                         break;
 
+                    case ConsoleKey.Escape:
+                        isRunning = !isRunning;
+                        break;
                     default:
                         break;
                 }
-            } while (true);
+            } while (isRunning);
         }
 
 
@@ -108,6 +100,6 @@ namespace Labb2
         //om den blev attackerad förra rundan, attackera tillbaka.
 
         //om attack sker, räkna ut skada och uppdatera värden.
-        
+
     }
 }

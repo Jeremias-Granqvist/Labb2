@@ -12,10 +12,8 @@ namespace Labb2.Elements
         //ärver från "Enemy"
         //implementerar Update() metod
         public char snakeIcon = 's';
-
         public Snake()
         {
-
         }
 
         public Snake(int x, int y)
