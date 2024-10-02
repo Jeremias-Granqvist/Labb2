@@ -28,15 +28,30 @@
 
         public void Collision(int x, int y)
         {
-            
+            int testpositionX = x;
+            int testpositionY = y;
 
+            for (int i = 0; i < _levelData.Elements.Count; i++)
+            {
+
+
+                if (testpositionX == _levelData.Elements[i].horizontalPosition && testpositionY+1 == _levelData.Elements[i].verticalPosition)
+                {
+                    Console.Write("här sker en kollision");
+                    break;
+
+                    //om den existerar, avbryt flyttet.
+                    //ev. skapa en bool? skifta värde om den uppfylls och breaka loopen?
+                }
+
+            }
         }
 
 
 
         public void MovePlayer()
-        {
-
+        { 
+            
             int x = player.Position.X;
             int y = player.Position.Y;
             bool isRunning = true;
@@ -44,25 +59,10 @@
             {
                 keyInput = Console.ReadKey(true);
 
-                int testX = x; //??
-                int testY = y; //??
-
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-
-//                        for (int i = 0; i < LevelData.Elements.Count; i++)
-                        {
-
-                        
-                        if (true)
-
-                        {
-                            //skapa en "testposition", testa den mot positioner i "levelData.Elements", om dom inte existerar breaka
-                            //om den existerar, avbryt flyttet.
-                            //ev. skapa en bool? skifta värde om den uppfylls och breaka loopen?
-                        }
-                        }
+                        Collision(x, y);
                         Console.SetCursorPosition(x, y);
                         Console.Write(' ');
                         y--;
