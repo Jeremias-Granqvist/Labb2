@@ -4,6 +4,8 @@
     {
         private LevelData _levelData;
 
+
+
         public Position Position { get; set; }
         ConsoleKeyInfo keyInput;
 
@@ -13,9 +15,6 @@
         public GameLoop(LevelData levelData)
         {
             _levelData = levelData;
-
-
-            //iterera min elements loop, när jag hittar min spelare, assigna till fältet player och return.
             foreach (var element in levelData.Elements)
             {
                 if (element is Player)
@@ -23,35 +22,64 @@
                     player = (Player)element;
                 }
             }
-
         }
-
-        public void Collision(int x, int y)
+        public bool CollisionUp(int x, int y)
         {
             int testpositionX = x;
             int testpositionY = y;
-
             for (int i = 0; i < _levelData.Elements.Count; i++)
             {
-
-
-                if (testpositionX == _levelData.Elements[i].horizontalPosition && testpositionY+1 == _levelData.Elements[i].verticalPosition)
+                if (testpositionX == _levelData.Elements[i].horizontalPosition && testpositionY - 1 == _levelData.Elements[i].verticalPosition)
                 {
-                    Console.Write("här sker en kollision");
-                    break;
-
-                    //om den existerar, avbryt flyttet.
-                    //ev. skapa en bool? skifta värde om den uppfylls och breaka loopen?
+                    return true;
                 }
-
             }
+            return false;
+        }
+        public bool CollisionDown(int x, int y)
+        {
+            int testpositionX = x;
+            int testpositionY = y;
+            for (int i = 0; i < _levelData.Elements.Count; i++)
+            {
+                if (testpositionX == _levelData.Elements[i].horizontalPosition && testpositionY + 1 == _levelData.Elements[i].verticalPosition)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool CollisionLeft(int x, int y)
+        {
+            int testpositionX = x;
+            int testpositionY = y;
+            for (int i = 0; i < _levelData.Elements.Count; i++)
+            {
+                if (testpositionX - 1 == _levelData.Elements[i].horizontalPosition && testpositionY == _levelData.Elements[i].verticalPosition)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool CollisionRight(int x, int y)
+        {
+            int testpositionX = x;
+            int testpositionY = y;
+            for (int i = 0; i < _levelData.Elements.Count; i++)
+            {
+                if (testpositionX + 1 == _levelData.Elements[i].horizontalPosition && testpositionY == _levelData.Elements[i].verticalPosition)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
-
         public void MovePlayer()
-        { 
-            
+        {
+
             int x = player.Position.X;
             int y = player.Position.Y;
             bool isRunning = true;
@@ -62,36 +90,51 @@
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        Collision(x, y);
-                        Console.SetCursorPosition(x, y);
-                        Console.Write(' ');
-                        y--;
-                        Console.SetCursorPosition(x, y);
-                        player.Draw();
+
+
+                        if (CollisionUp(x, y) == false)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.Write(' ');
+                            y--;
+                            Console.SetCursorPosition(x, y);
+                            player.Draw();
+                        }
                         break;
 
                     case ConsoleKey.DownArrow:
-                        Console.SetCursorPosition(x, y);
-                        Console.Write(' ');
-                        y++;
-                        Console.SetCursorPosition(x, y);
-                        player.Draw();
+
+                        if (CollisionDown(x, y) == false)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.Write(' ');
+                            y++;
+                            Console.SetCursorPosition(x, y);
+                            player.Draw();
+
+                        }
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        Console.SetCursorPosition(x, y);
-                        Console.Write(' ');
-                        x--;
-                        Console.SetCursorPosition(x, y);
-                        player.Draw();
+                        if (CollisionLeft(x, y) == false)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.Write(' ');
+                            x--;
+                            Console.SetCursorPosition(x, y);
+                            player.Draw();
+                        }
                         break;
 
                     case ConsoleKey.RightArrow:
-                        Console.SetCursorPosition(x, y);
-                        Console.Write(' ');
-                        x++;
-                        Console.SetCursorPosition(x, y);
-                        player.Draw();
+                        if (CollisionRight(x, y) == false)
+                        {
+                            Console.SetCursorPosition(x, y);
+                            Console.Write(' ');
+                            x++;
+                            Console.SetCursorPosition(x, y);
+                            player.Draw();
+                        }
                         break;
 
                     case ConsoleKey.Escape:
