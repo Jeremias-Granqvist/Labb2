@@ -5,9 +5,9 @@
 
         //ska ha property för X
         //ska ha property för Y
+        public Position Position { get; set; }
 
-        public int horizontalPosition;
-        public int verticalPosition;
+
         public LevelElement()
         {
            
@@ -15,8 +15,6 @@
 
         public LevelElement(int x, int y)
         {
-            this.horizontalPosition = x;
-            this.verticalPosition = y;
         }
 
         //char som lagrar vilket tecken en klass ritas ut med, t.ex. # för wall

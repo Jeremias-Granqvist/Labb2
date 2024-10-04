@@ -13,12 +13,23 @@ namespace Labb2
         public int X { get; set; }
         public int Y { get; set; }
 
+        public Position(Position position) : this(position.X, position.Y)
+        {
+        }
         public Position(int x, int y)
         {
             this.X = x;
             this.Y = y;
         }
-        
+
+        public int VerticalDistanceTo(Position position) => Math.Abs(position.X - this.X);
+        public int HorizontalDistanceTo(Position position) => Math.Abs(position.Y - this.Y);
+
+        //public double DistanceTo(Position position)
+        //{
+        //    return (VerticalDistanceTo - HorizontalDistanceTo);
+        //}
+
         //property för x och y, kan användas för att lagra positioner
         //player.position.x
         //snake.position.y

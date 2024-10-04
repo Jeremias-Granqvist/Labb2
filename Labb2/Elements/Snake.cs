@@ -12,14 +12,15 @@ namespace Labb2.Elements
         //ärver från "Enemy"
         //implementerar Update() metod
         public char snakeIcon = 's';
+
         public Snake()
         {
         }
 
         public Snake(int x, int y)
         {
-            this.horizontalPosition = x;
-            this.verticalPosition = y;
+            Position = new Position(x, y);
+
         }
 
         public override void Draw()

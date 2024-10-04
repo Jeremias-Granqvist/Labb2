@@ -10,11 +10,8 @@ namespace Labb2
 {
     class Player : LevelElement
     {
-        public Position Position { get; set; }
 
         public char playerIcon = '@';
-
-
         //hårdkoda följande värden
         // Player: HP = 100, AttackDice = 2d6+2, DefenceDice = 2d6+0
 
@@ -26,7 +23,7 @@ namespace Labb2
             Draw();
         }
 
-        public void Draw()
+        public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(playerIcon);

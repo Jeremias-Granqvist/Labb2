@@ -3,13 +3,14 @@
     class Wall : LevelElement
     {
         public char wallIcon = '#';
+
         public Wall()
         {
         }
         public Wall(int x, int y)
         {
-            this.horizontalPosition = x;
-            this.verticalPosition = y;
+            Position = new Position(x, y);
+
         }
         public override void Draw()
         {

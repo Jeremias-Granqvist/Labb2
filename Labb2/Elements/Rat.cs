@@ -9,13 +9,15 @@ namespace Labb2.Elements
     internal class Rat : Enemy
     {
         public char ratIcon = 'r';
+
         public Rat()
         {
         }
         public Rat(int x, int y)
         {
-            this.horizontalPosition = x;
-            this.verticalPosition = y;
+
+            Position = new Position(x, y);
+
         }
         public override void Draw()
         {

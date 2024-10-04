@@ -5,7 +5,7 @@ game.Load($"\\Levels\\Level1.txt");
 
 foreach (var element in game.Elements)
 {
-    Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+    Console.SetCursorPosition(element.Position.X, element.Position.Y);
     element.Draw();
 }
 GameLoop turn = new GameLoop(game);
