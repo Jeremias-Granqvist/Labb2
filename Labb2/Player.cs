@@ -28,7 +28,9 @@ namespace Labb2
 
         public void Draw()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write(playerIcon);
+            Console.ResetColor();
         }
     }
 }

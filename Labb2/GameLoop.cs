@@ -1,4 +1,7 @@
-﻿namespace Labb2
+﻿using Labb2.Elements;
+using System.Xml.Linq;
+
+namespace Labb2
 {
     class GameLoop
     {
@@ -76,6 +79,185 @@
             return false;
         }
 
+        public int MoveEnemyUp(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            y--;
+            Console.SetCursorPosition(x, y);
+            return y;
+        }           // av någon anledning så duplicerar sig karaktärerna här ibland
+        public int MoveEnemyDown(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            y++;
+            Console.SetCursorPosition(x, y);
+            return y;
+        }           // av någon anledning så duplicerar sig karaktärerna här ibland
+        public int MoveEnemyRight(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            x++;
+            Console.SetCursorPosition(x, y);
+            return x;
+        }           // av någon anledning så duplicerar sig karaktärerna här ibland
+        public int MoveEnemyLeft(int x, int y)              // av någon anledning så duplicerar sig karaktärerna här ibland
+        {
+
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            x--;
+            Console.SetCursorPosition(x, y);
+            return x;
+        }
+
+        public void EnemyMovement(int x, int y)
+        {
+            foreach (var element in _levelData.Elements)
+            {
+                if (element is Wall)
+                {
+                    continue;
+                }
+                if (element is Rat)
+                {
+                    Dice dice = new Dice();
+                    if (dice.DiceResult == 1 && CollisionUp(element.horizontalPosition, element.verticalPosition) == false)
+                    {
+                        //MoveEnemyUp(element.horizontalPosition, element.verticalPosition);
+                        //element.verticalPosition = y;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        Console.Write(' ');
+                        element.verticalPosition--;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        
+                        element.Draw();
+                    }
+                    else if (dice.DiceResult == 2 && CollisionRight(element.horizontalPosition, element.verticalPosition) == false)
+                    {
+                        //MoveEnemyRight(element.horizontalPosition, element.verticalPosition);
+                        //element.horizontalPosition = x;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        Console.Write(' ');
+                        element.horizontalPosition++;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                       
+                        element.Draw();
+                    }
+                    else if (dice.DiceResult == 3 && CollisionDown(element.horizontalPosition, element.verticalPosition) == false)
+                    {
+                        //MoveEnemyDown(element.horizontalPosition, element.verticalPosition);
+                        //element.verticalPosition = y;
+
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        Console.Write(' ');
+                        element.verticalPosition++;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        element.Draw();
+                    }
+                    else if (dice.DiceResult == 4 && CollisionLeft(element.horizontalPosition, element.verticalPosition) == false)
+                    {
+                        //MoveEnemyLeft(element.horizontalPosition, element.verticalPosition);
+                        //element.horizontalPosition = x;
+
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        Console.Write(' ');
+                        element.horizontalPosition--;
+                        Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                        element.Draw();
+                    }
+                }
+                if (element is Snake)
+                {
+                    if (Math.Abs(x - element.horizontalPosition) + Math.Abs(y - element.verticalPosition) <= 2)
+                    {
+                        if (y > element.verticalPosition)
+                        {
+                            if (CollisionUp(element.horizontalPosition, element.verticalPosition) == false)
+                            {
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                Console.Write(' ');
+                                element.verticalPosition++;
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                element.Draw();
+                            }
+                        }
+                        else if (x < element.horizontalPosition)
+                        {
+                            if (CollisionRight(element.horizontalPosition, element.verticalPosition) == false)
+                            {
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                Console.Write(' ');
+                                element.horizontalPosition++;
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                element.Draw();
+                            }
+                        }
+                        else if (y < element.verticalPosition)
+                        {
+                            if (CollisionDown(element.horizontalPosition, element.horizontalPosition) == false)
+                            {
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                Console.Write(' ');
+                                element.verticalPosition++;
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                element.Draw();
+                            }
+                        }
+                        else if (x > element.horizontalPosition)
+                        {
+                            if (CollisionLeft(element.horizontalPosition, element.verticalPosition) == false)
+                            {
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                Console.Write(' ');
+                                element.horizontalPosition--;
+                                Console.SetCursorPosition(element.horizontalPosition, element.verticalPosition);
+                                element.Draw();
+                            }
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+        public int MovePlayerUp(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            y--;
+            Console.SetCursorPosition(x, y);
+            return y;
+        }
+        public int MovePlayerDown(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            y++;
+            Console.SetCursorPosition(x, y);
+            return y;
+        }
+        public int MovePlayerRight(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            x++;
+            Console.SetCursorPosition(x, y);
+            return x;
+        }
+        public int MovePlayerLeft(int x, int y)
+        {
+
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+            x--;
+            Console.SetCursorPosition(x, y);
+            return x;
+        }
+
 
         public void MovePlayer()
         {
@@ -85,43 +267,35 @@
             bool isRunning = true;
             do
             {
+                player.horizontalPosition = x;
+                player.verticalPosition = y;
                 keyInput = Console.ReadKey(true);
 
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-
-
                         if (CollisionUp(x, y) == false)
                         {
-                            Console.SetCursorPosition(x, y);
-                            Console.Write(' ');
-                            y--;
-                            Console.SetCursorPosition(x, y);
+                            MovePlayerUp(x, y);
+                            y = MovePlayerUp(x, y);
                             player.Draw();
                         }
                         break;
 
                     case ConsoleKey.DownArrow:
-
                         if (CollisionDown(x, y) == false)
                         {
-                            Console.SetCursorPosition(x, y);
-                            Console.Write(' ');
-                            y++;
-                            Console.SetCursorPosition(x, y);
+                            MovePlayerDown(x, y);
+                            y = MovePlayerDown(x, y);
                             player.Draw();
-
                         }
                         break;
 
                     case ConsoleKey.LeftArrow:
                         if (CollisionLeft(x, y) == false)
                         {
-                            Console.SetCursorPosition(x, y);
-                            Console.Write(' ');
-                            x--;
-                            Console.SetCursorPosition(x, y);
+                            MovePlayerLeft(x, y);
+                            x = MovePlayerLeft(x, y);
                             player.Draw();
                         }
                         break;
@@ -129,10 +303,8 @@
                     case ConsoleKey.RightArrow:
                         if (CollisionRight(x, y) == false)
                         {
-                            Console.SetCursorPosition(x, y);
-                            Console.Write(' ');
-                            x++;
-                            Console.SetCursorPosition(x, y);
+                            MovePlayerRight(x, y);
+                            x = MovePlayerRight(x, y);
                             player.Draw();
                         }
                         break;
@@ -143,6 +315,9 @@
                     default:
                         break;
                 }
+
+                EnemyMovement(x, y);
+
             } while (isRunning);
         }
 

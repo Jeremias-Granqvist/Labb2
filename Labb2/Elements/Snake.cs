@@ -27,5 +27,7 @@ namespace Labb2.Elements
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(snakeIcon);
         }
+        
+
     }
 }

@@ -21,6 +21,7 @@ namespace Labb2.Elements
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(ratIcon);
+            Console.ResetColor();
         }
     }
 }

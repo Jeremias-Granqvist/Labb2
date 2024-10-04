@@ -8,11 +8,11 @@ namespace Labb2
 {
     class Dice
     {
-        public int diceSides { get; set; }
-        public int numOfDice { get; set; }
-        public int bonusModifier { get; set; }
-        public int diceResult { get; set; }
-        public int randomResult { get; set; }
+        public int DiceSides { get; set; }
+        public int NumOfDice { get; set; }
+        public int BonusModifier { get; set; }
+        public int DiceResult { get; set; }
+        public int RandomResult { get; set; }
 
         Random randomDiceResult = new Random();
         //konstruktor som tar 3 params, numberOfDice, sidesPerDice, modifier
@@ -20,9 +20,13 @@ namespace Labb2
         
         public Dice(int numberOfDice, int sidesPerDice, int modifier)
         {
-            this.numOfDice = numberOfDice;
-            this.diceSides = sidesPerDice;
-            this.bonusModifier = modifier;
+            this.NumOfDice = numberOfDice;
+            this.DiceSides = sidesPerDice;
+            this.BonusModifier = modifier;
+        }
+        public Dice()
+        {
+            DiceResult = randomDiceResult.Next(0, 5); 
         }
 
 
@@ -33,10 +37,10 @@ namespace Labb2
         {
             for (int i = 1; i <= numberOfDice; i++)
             {
-                randomResult = randomDiceResult.Next(0, diceSides);
-                diceResult += randomResult;
+                RandomResult = randomDiceResult.Next(0, DiceSides);
+                DiceResult += RandomResult;
             }
-            return randomResult+modifier;
+            return RandomResult+modifier;
 
         }
         //public Throw() returnerar ett heltal med poäng när man slår tärningarna enligt
@@ -45,7 +49,7 @@ namespace Labb2
 
         public override string ToString()
         {
-            return $"{numOfDice}D{diceSides}+{bonusModifier}";
+            return $"{NumOfDice}D{DiceSides}+{BonusModifier}";
         }
 
         
