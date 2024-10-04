@@ -23,6 +23,7 @@ namespace Labb2
             Draw();
         }
 
+
         public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.White;

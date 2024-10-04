@@ -19,6 +19,10 @@ namespace Labb2.Elements
             Position = new Position(x, y);
 
         }
+        public void AttackDice()
+        {
+
+        }
         public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Red;

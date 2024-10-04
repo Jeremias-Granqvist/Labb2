@@ -85,7 +85,7 @@ namespace Labb2
             element.Position = new Position(element.Position.X, element.Position.Y - 1);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.Y;
-        }           // av någon anledning så duplicerar sig karaktärerna här ibland
+        }
         public int MoveEnemyDown(LevelElement element, int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -93,7 +93,7 @@ namespace Labb2
             element.Position = new Position(element.Position.X, element.Position.Y + 1);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.Y;
-        }           // av någon anledning så duplicerar sig karaktärerna här ibland
+        }          
         public int MoveEnemyRight(LevelElement element, int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -101,8 +101,8 @@ namespace Labb2
             element.Position = new Position(element.Position.X + 1, element.Position.Y);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.X;
-        }           // av någon anledning så duplicerar sig karaktärerna här ibland
-        public int MoveEnemyLeft(LevelElement element, int x, int y)              // av någon anledning så duplicerar sig karaktärerna här ibland
+        }           
+        public int MoveEnemyLeft(LevelElement element, int x, int y)
         {
 
             Console.SetCursorPosition(x, y);
@@ -238,7 +238,7 @@ namespace Labb2
                             y = MovePlayerUp(x, y);
                             player.Draw();
 
-                        }
+                        }                   // börja koda in vad jag krockar med om collision är false här, uppdatera med metoder allt eftersom och kalla dice från respektive klass
                         break;
 
                     case ConsoleKey.DownArrow:
