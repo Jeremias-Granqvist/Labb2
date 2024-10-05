@@ -12,12 +12,20 @@ namespace Labb2
     {
 
         public char playerIcon = '@';
-        //hårdkoda följande värden
         // Player: HP = 100, AttackDice = 2d6+2, DefenceDice = 2d6+0
-
+        public int HealthPoints { get; set; }
+        public int NumOfDice { get; set; }
+        public int SideOfDice { get; set; }
+        public int AtkModifier { get; set; }
+        public int DefModifier { get; set; }
         public Player(int x, int y)
         {
             Position = new Position(x, y);
+            HealthPoints = 100;
+            NumOfDice = 2;
+            SideOfDice = 6;
+            AtkModifier = 2;
+            DefModifier = 0;
 
             Console.SetCursorPosition(Position.X, Position.Y);
             Draw();

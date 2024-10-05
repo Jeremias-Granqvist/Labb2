@@ -20,6 +20,17 @@ namespace Labb2.Elements
         public Snake(int x, int y)
         {
             Position = new Position(x, y);
+            this.Name = snakeIcon;
+
+            this.HealthPoints = 25;
+
+            this.NumOfAtkDice = 3;
+            this.SideOfAtkDice = 4;
+            this.AtkModifier = 2;
+
+            this.NumOfDefDice = 1;
+            this.SideOfDefDice = 8;
+            this.DefModifier = 5;
 
         }
 

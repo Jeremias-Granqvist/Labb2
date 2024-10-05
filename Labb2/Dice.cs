@@ -24,9 +24,9 @@ namespace Labb2
             this.DiceSides = sidesPerDice;
             this.BonusModifier = modifier;
         }
-        public Dice()
+        public Dice(int sidesOfDice)
         {
-            DiceResult = randomDiceResult.Next(0, 5); 
+            DiceResult = randomDiceResult.Next(0, sidesOfDice+1); 
         }
 
 
@@ -37,7 +37,7 @@ namespace Labb2
         {
             for (int i = 1; i <= numberOfDice; i++)
             {
-                RandomResult = randomDiceResult.Next(0, DiceSides);
+                RandomResult = randomDiceResult.Next(0, DiceSides+1);
                 DiceResult += RandomResult;
             }
             return RandomResult+modifier;

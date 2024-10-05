@@ -6,14 +6,9 @@ namespace Labb2
     class GameLoop
     {
         private LevelData _levelData;
-
-
         public Position Position { get; set; }
         ConsoleKeyInfo keyInput;
-
         Player player;
-
-
         public GameLoop(LevelData levelData)
         {
             _levelData = levelData;
@@ -24,6 +19,34 @@ namespace Labb2
                     player = (Player)element;
                 }
             }
+        }
+        public enum CollisionDirection
+        {
+            None,
+            Up,
+            Down,
+            Left,
+            Right
+        }
+        public (bool hasCollision, CollisionDirection direction) CheckCollision (int x, int y)
+        {
+            if (CollisionUp(x,y))
+            {
+                return (true, CollisionDirection.Up);
+            }
+            if (CollisionDown(x,y))
+            {
+                return (true, CollisionDirection.Down);
+            }
+            if (CollisionRight(x,y))
+            {
+                return ( true, CollisionDirection.Right);
+            }
+            if (CollisionLeft(x,y))
+            {
+                return (true, CollisionDirection.Left);
+            }
+            return (false, CollisionDirection.None);
         }
         public bool CollisionUp(int x, int y)
         {
@@ -77,7 +100,31 @@ namespace Labb2
             }
             return false;
         }
+        public bool Collision(int x, int y)
+        {
+            if (CollisionUp(x,y) == true)
+            {
+                return true;
+            }
+            if (CollisionDown(x, y) == true)
+            {
+                return true;
+            }
+            if (CollisionRight(x, y) == true)
+            {
+                return true;
+            }
+            if (CollisionLeft(x, y) == true)
+            {
+                return true;
+            }
 
+            return false;
+        }
+        public void CollideWithWhat(int x, int y)
+        {
+            
+        }
         public int MoveEnemyUp(LevelElement element, int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -111,7 +158,6 @@ namespace Labb2
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.X;
         }
-
         public void EnemyMovement(int x, int y)
         {
             foreach (var element in _levelData.Elements)
@@ -122,7 +168,7 @@ namespace Labb2
                 }
                 if (element is Rat)
                 {
-                    Dice dice = new Dice();
+                    Dice dice = new Dice(4);
                     if (dice.DiceResult == 1 && CollisionUp(element.Position.X, element.Position.Y) == false && !(element.Position.X == x && element.Position.Y - 1 == y))
                     {
                         y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
@@ -184,7 +230,6 @@ namespace Labb2
                 }
             }
         }
-
         public int MovePlayerUp(int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -233,16 +278,16 @@ namespace Labb2
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if (CollisionUp(x, y) == false)
+                        if (CheckCollision(x,y).hasCollision == false)
                         {
                             y = MovePlayerUp(x, y);
                             player.Draw();
-
-                        }                   // börja koda in vad jag krockar med om collision är false här, uppdatera med metoder allt eftersom och kalla dice från respektive klass
+                        }
+                        // börja koda in vad jag krockar med om collision är false här, uppdatera med metoder allt eftersom och kalla dice från respektive klass
                         break;
 
                     case ConsoleKey.DownArrow:
-                        if (CollisionDown(x, y) == false)
+                        if (CheckCollision(x, y).hasCollision == false)
                         {
                             y = MovePlayerDown(x, y);
                             player.Draw();
@@ -250,7 +295,7 @@ namespace Labb2
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        if (CollisionLeft(x, y) == false)
+                        if (CheckCollision(x, y).hasCollision == false)
                         {
                             x = MovePlayerLeft(x, y);
                             player.Draw();
@@ -258,7 +303,7 @@ namespace Labb2
                         break;
 
                     case ConsoleKey.RightArrow:
-                        if (CollisionRight(x, y) == false)
+                        if (CheckCollision(x, y).hasCollision == false)
                         {
                             x = MovePlayerRight(x, y);
                             player.Draw();

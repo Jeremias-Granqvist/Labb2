@@ -17,12 +17,19 @@ namespace Labb2.Elements
         {
 
             Position = new Position(x, y);
+            this.Name = ratIcon;
 
-        }
-        public void AttackDice()
-        {
+            this.HealthPoints = 10;
+            
+            this.NumOfAtkDice = 1;
+            this.SideOfAtkDice = 6;
+            this.AtkModifier = 3;
 
+            this.NumOfDefDice = 1;
+            this.SideOfDefDice = 6;
+            this. DefModifier = 1;
         }
+
         public override void Draw()
         {
             Console.ForegroundColor = ConsoleColor.Red;
