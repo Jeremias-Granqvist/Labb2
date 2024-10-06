@@ -19,5 +19,6 @@ namespace Labb2.Elements
         public int DefModifier { get; set; }
         //abstract "Update()"
 
+        public abstract void Update(int combatResult);
     }
 }

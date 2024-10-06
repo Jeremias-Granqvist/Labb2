@@ -9,6 +9,6 @@ foreach (var element in game.Elements)
     element.Draw();
 }
 GameLoop turn = new GameLoop(game);
-turn.MovePlayer();
+turn.TurnCycle();
 
 Console.ReadLine();

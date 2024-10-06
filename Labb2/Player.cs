@@ -38,5 +38,15 @@ namespace Labb2
             Console.Write(playerIcon);
             Console.ResetColor();
         }
+
+        public void Update(int combatResult)
+        {
+            HealthPoints = HealthPoints - combatResult;
+
+            if (HealthPoints <= 0)
+            {
+                Console.WriteLine("Game Over");
+            }
+        }
     }
 }

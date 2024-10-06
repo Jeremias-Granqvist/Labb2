@@ -36,5 +36,17 @@ namespace Labb2.Elements
             Console.Write(ratIcon);
             Console.ResetColor();
         }
+
+        public override void Update(int combatResult)
+        {
+            HealthPoints = HealthPoints - combatResult;
+
+            if (HealthPoints <= 0)
+            {
+                Position = new Position(0, 0);
+                ratIcon = ' ';
+                Draw();
+            }
+        }
     }
 }

@@ -37,10 +37,11 @@ namespace Labb2
         {
             for (int i = 1; i <= numberOfDice; i++)
             {
-                RandomResult = randomDiceResult.Next(0, DiceSides+1);
+                DiceResult = 0;
+                RandomResult = randomDiceResult.Next(0, sidesPerDice+1);
                 DiceResult += RandomResult;
             }
-            return RandomResult+modifier;
+            return DiceResult+modifier;
 
         }
         //public Throw() returnerar ett heltal med poäng när man slår tärningarna enligt

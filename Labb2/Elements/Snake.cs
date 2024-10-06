@@ -30,7 +30,7 @@ namespace Labb2.Elements
 
             this.NumOfDefDice = 1;
             this.SideOfDefDice = 8;
-            this.DefModifier = 5;
+            this.DefModifier = 3;
 
         }
 
@@ -39,7 +39,10 @@ namespace Labb2.Elements
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(snakeIcon);
         }
-        
+        public override void Update(int combatResult)
+        {
+            HealthPoints = HealthPoints - combatResult;
+        }
 
     }
 }

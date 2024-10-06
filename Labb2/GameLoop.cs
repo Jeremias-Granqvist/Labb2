@@ -1,5 +1,4 @@
 ﻿using Labb2.Elements;
-using System.Xml.Linq;
 
 namespace Labb2
 {
@@ -20,111 +19,35 @@ namespace Labb2
                 }
             }
         }
-        public enum CollisionDirection
-        {
-            None,
-            Up,
-            Down,
-            Left,
-            Right
-        }
-        public (bool hasCollision, CollisionDirection direction) CheckCollision (int x, int y)
-        {
-            if (CollisionUp(x,y))
-            {
-                return (true, CollisionDirection.Up);
-            }
-            if (CollisionDown(x,y))
-            {
-                return (true, CollisionDirection.Down);
-            }
-            if (CollisionRight(x,y))
-            {
-                return ( true, CollisionDirection.Right);
-            }
-            if (CollisionLeft(x,y))
-            {
-                return (true, CollisionDirection.Left);
-            }
-            return (false, CollisionDirection.None);
-        }
-        public bool CollisionUp(int x, int y)
+        public LevelElement CollisionUp(int x, int y)
         {
             int testpositionX = x;
             int testpositionY = y;
-            for (int i = 0; i < _levelData.Elements.Count; i++)
-            {
-                if (testpositionX == _levelData.Elements[i].Position.X && testpositionY - 1 == _levelData.Elements[i].Position.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX && e.Position.Y == testpositionY - 1);
+            return collisionWith;
         }
-        public bool CollisionDown(int x, int y)
+        public LevelElement CollisionDown(int x, int y)
         {
             int testpositionX = x;
             int testpositionY = y;
-            for (int i = 0; i < _levelData.Elements.Count; i++)
-            {
-                if (testpositionX == _levelData.Elements[i].Position.X && testpositionY + 1 == _levelData.Elements[i].Position.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX && e.Position.Y == testpositionY + 1)
+            return collisionWith;
         }
-        public bool CollisionLeft(int x, int y)
+        public LevelElement CollisionLeft(int x, int y)
         {
             int testpositionX = x;
             int testpositionY = y;
-            for (int i = 0; i < _levelData.Elements.Count; i++)
-            {
-                if (testpositionX - 1 == _levelData.Elements[i].Position.X && testpositionY == _levelData.Elements[i].Position.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX - 1 && e.Position.Y == testpositionY);
+            return collisionWith;
         }
-        public bool CollisionRight(int x, int y)
+        public LevelElement CollisionRight(int x, int y)
         {
             int testpositionX = x;
             int testpositionY = y;
-            for (int i = 0; i < _levelData.Elements.Count; i++)
-            {
-                if (testpositionX + 1 == _levelData.Elements[i].Position.X && testpositionY == _levelData.Elements[i].Position.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
+            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX + 1 && e.Position.Y == testpositionY);
+            return collisionWith;
         }
-        public bool Collision(int x, int y)
-        {
-            if (CollisionUp(x,y) == true)
-            {
-                return true;
-            }
-            if (CollisionDown(x, y) == true)
-            {
-                return true;
-            }
-            if (CollisionRight(x, y) == true)
-            {
-                return true;
-            }
-            if (CollisionLeft(x, y) == true)
-            {
-                return true;
-            }
 
-            return false;
-        }
-        public void CollideWithWhat(int x, int y)
-        {
-            
-        }
         public int MoveEnemyUp(LevelElement element, int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -140,7 +63,7 @@ namespace Labb2
             element.Position = new Position(element.Position.X, element.Position.Y + 1);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.Y;
-        }          
+        }
         public int MoveEnemyRight(LevelElement element, int x, int y)
         {
             Console.SetCursorPosition(x, y);
@@ -148,7 +71,7 @@ namespace Labb2
             element.Position = new Position(element.Position.X + 1, element.Position.Y);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.X;
-        }           
+        }
         public int MoveEnemyLeft(LevelElement element, int x, int y)
         {
 
@@ -169,22 +92,22 @@ namespace Labb2
                 if (element is Rat)
                 {
                     Dice dice = new Dice(4);
-                    if (dice.DiceResult == 1 && CollisionUp(element.Position.X, element.Position.Y) == false && !(element.Position.X == x && element.Position.Y - 1 == y))
+                    if (dice.DiceResult == 1 && CollisionUp(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y - 1 == y))
                     {
                         y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == false && !(element.Position.X + 1 == x && element.Position.Y == y))
+                    else if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
                     {
                         x = MoveEnemyRight(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == false && !(element.Position.X == x && element.Position.Y + 1 == y))
+                    else if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
                     {
                         y = MoveEnemyDown(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == false && !(element.Position.X == x -1 && element.Position.Y == y))
+                    else if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
                     {
                         x = MoveEnemyLeft(element, element.Position.X, element.Position.Y);
                         element.Draw();
@@ -196,7 +119,7 @@ namespace Labb2
                     {
                         if (player.Position.Y > element.Position.Y)
                         {
-                            if (CollisionUp(element.Position.X, element.Position.Y) == false)
+                            if (CollisionUp(element.Position.X, element.Position.Y) == null)
                             {
                                 y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
                                 element.Draw();
@@ -204,7 +127,7 @@ namespace Labb2
                         }
                         else if (player.Position.X < element.Position.X)
                         {
-                            if (CollisionRight(element.Position.X, element.Position.Y) == false)
+                            if (CollisionRight(element.Position.X, element.Position.Y) == null)
                             {
                                 x = MoveEnemyRight(element, element.Position.X, element.Position.Y);
                                 element.Draw();
@@ -212,7 +135,7 @@ namespace Labb2
                         }
                         else if (player.Position.Y < element.Position.Y)
                         {
-                            if (CollisionDown(element.Position.X, element.Position.Y) == false)
+                            if (CollisionDown(element.Position.X, element.Position.Y) == null)
                             {
                                 y = MoveEnemyDown(element, element.Position.X, element.Position.Y);
                                 element.Draw();
@@ -220,7 +143,7 @@ namespace Labb2
                         }
                         else if (x > element.Position.X)
                         {
-                            if (CollisionLeft(element.Position.X, element.Position.Y) == false)
+                            if (CollisionLeft(element.Position.X, element.Position.Y) == null)
                             {
                                 x = MoveEnemyLeft(element, element.Position.X, element.Position.Y);
                                 element.Draw();
@@ -234,7 +157,7 @@ namespace Labb2
         {
             Console.SetCursorPosition(x, y);
             Console.Write(' ');
-            player.Position = new Position(player.Position.X, player.Position.Y-1);
+            player.Position = new Position(player.Position.X, player.Position.Y - 1);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.Y;
         }
@@ -242,7 +165,7 @@ namespace Labb2
         {
             Console.SetCursorPosition(x, y);
             Console.Write(' ');
-            player.Position = new Position(player.Position.X, player.Position.Y+1);
+            player.Position = new Position(player.Position.X, player.Position.Y + 1);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.Y;
         }
@@ -263,11 +186,33 @@ namespace Labb2
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.X;
         }
-
-
-        public void MovePlayer()
+        public int PlayerAttack()
         {
-            
+            Dice atk = new Dice(player.NumOfDice, player.SideOfDice, player.AtkModifier);
+            return atk.Throw(player.NumOfDice, player.SideOfDice, player.AtkModifier);
+        }
+        public int PlayerDefend()
+        {
+            Dice atk = new Dice(player.NumOfDice, player.SideOfDice, player.DefModifier);
+            return atk.Throw(player.NumOfDice, player.SideOfDice, player.DefModifier);
+        }
+        public int EnemyAttack(Enemy enemy)
+        {
+            Dice def = new Dice(enemy.NumOfAtkDice, enemy.SideOfAtkDice, enemy.AtkModifier);
+            return def.Throw(enemy.NumOfAtkDice, enemy.SideOfAtkDice, enemy.AtkModifier);
+        }
+        public int EnemyDefend(Enemy enemy)
+        {
+            Dice def = new Dice(enemy.NumOfDefDice, enemy.SideOfDefDice, enemy.DefModifier);
+            return def.Throw(enemy.NumOfDefDice, enemy.SideOfDefDice, enemy.DefModifier);
+        }
+        public int CombatResult(int Atk, int Def)
+        {
+            return Atk - Def;
+        }
+        public void TurnCycle()
+        {
+
             int x = player.Position.X;
             int y = player.Position.Y;
             bool isRunning = true;
@@ -278,35 +223,75 @@ namespace Labb2
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if (CheckCollision(x,y).hasCollision == false)
+                        if (CollisionUp(x, y) is null)
                         {
                             y = MovePlayerUp(x, y);
                             player.Draw();
                         }
-                        // börja koda in vad jag krockar med om collision är false här, uppdatera med metoder allt eftersom och kalla dice från respektive klass
+                        else if (CollisionUp(x, y) is Enemy enemy)
+                        {
+                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            if (enemy.HealthPoints <= 0)
+                            {
+                                _levelData.Elements.Remove(enemy);
+                            }
+                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
+
+                        }
+
                         break;
 
                     case ConsoleKey.DownArrow:
-                        if (CheckCollision(x, y).hasCollision == false)
+                        if (CollisionDown(x, y) is null)
                         {
                             y = MovePlayerDown(x, y);
                             player.Draw();
                         }
+                        else if (CollisionDown(x, y) is Enemy enemy)
+                        {
+                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            if (enemy.HealthPoints <= 0)
+                            {
+                                _levelData.Elements.Remove(enemy);
+                            }
+                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
+
+                        }
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        if (CheckCollision(x, y).hasCollision == false)
+                        if (CollisionLeft(x, y) is null)
                         {
                             x = MovePlayerLeft(x, y);
                             player.Draw();
                         }
+                        else if (CollisionLeft(x, y) is Enemy enemy)
+                        {
+                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            if (enemy.HealthPoints <= 0)
+                            {
+                                _levelData.Elements.Remove(enemy);
+                            }
+                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
+
+                        }
                         break;
 
                     case ConsoleKey.RightArrow:
-                        if (CheckCollision(x, y).hasCollision == false)
+                        CollisionRight(x, y);
+                        if (CollisionRight(x, y) is null)
                         {
                             x = MovePlayerRight(x, y);
                             player.Draw();
+                        }
+                        else if (CollisionRight(x, y) is Enemy enemy)
+                        {
+                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            if (enemy.HealthPoints <= 0)
+                            {
+                                _levelData.Elements.Remove(enemy);
+                            }
+                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
                         }
                         break;
 
@@ -316,32 +301,11 @@ namespace Labb2
                     default:
                         break;
                 }
+
                 EnemyMovement(x, y);
 
 
             } while (isRunning);
         }
-
-
-
-
-        //gameloop: varje gång man trycker en tangent genomförs en ny iteration av loopen.
-
-        //utför spelarens drag (flytta/attackera)
-        //se om det är möjligt att gå dit, eller om det är blockerat.
-
-        //om det är blockerat av "Wall" flytta inte, attackera inte.
-        //om det är blockerat av "Enemy" flytta inte, attackera.
-        //om man blev attackerad förra rundan, attackera tillbaka direkt.
-        //behåll ursprungsposition. 
-
-        //utför fiendens drag  (flytta/attackera)
-        //om det är blockerat av "Wall" flytta inte, attackera inte.
-        //om det är blockerat av "Enemy" flytta inte, attackera inte.
-        //om det är blockerat av "Player" flytta inte, attackera.
-        //om den blev attackerad förra rundan, attackera tillbaka.
-
-        //om attack sker, räkna ut skada och uppdatera värden.
-
     }
 }
