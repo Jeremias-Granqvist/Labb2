@@ -15,7 +15,7 @@ namespace Labb2
 
             currentObject = (char)lvlData.Read();
             int x = 1;
-            int y = 1;
+            int y = 3;
             while (lvlData.EndOfStream == false)
             {
                 x++;

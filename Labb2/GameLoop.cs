@@ -1,4 +1,5 @@
 ﻿using Labb2.Elements;
+using System;
 
 namespace Labb2
 {
@@ -8,6 +9,7 @@ namespace Labb2
         public Position Position { get; set; }
         ConsoleKeyInfo keyInput;
         Player player;
+        int turn = 0;
         public GameLoop(LevelData levelData)
         {
             _levelData = levelData;
@@ -30,7 +32,7 @@ namespace Labb2
         {
             int testpositionX = x;
             int testpositionY = y;
-            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX && e.Position.Y == testpositionY + 1)
+            var collisionWith = _levelData.Elements.FirstOrDefault(e => e.Position.X == testpositionX && e.Position.Y == testpositionY + 1);
             return collisionWith;
         }
         public LevelElement CollisionLeft(int x, int y)
@@ -97,20 +99,36 @@ namespace Labb2
                         y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
+                    else if (CollisionUp(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
                     {
                         x = MoveEnemyRight(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
+                    else if (CollisionRight(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
                     {
                         y = MoveEnemyDown(element, element.Position.X, element.Position.Y);
                         element.Draw();
                     }
-                    else if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
+                    else if (CollisionDown(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
                     {
                         x = MoveEnemyLeft(element, element.Position.X, element.Position.Y);
                         element.Draw();
+                    }
+                    else if (CollisionLeft(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
                     }
                 }
                 if (element is Snake)
@@ -186,29 +204,54 @@ namespace Labb2
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.X;
         }
-        public int PlayerAttack()
+        public (int playerAttack, string diceString) PlayerAttack()
         {
             Dice atk = new Dice(player.NumOfDice, player.SideOfDice, player.AtkModifier);
-            return atk.Throw(player.NumOfDice, player.SideOfDice, player.AtkModifier);
+            string diceString = atk.ToString();
+            return (atk.Throw(player.NumOfDice, player.SideOfDice, player.AtkModifier), diceString);
         }
-        public int PlayerDefend()
+        public (int playerDefence, string diceString) PlayerDefend()
         {
-            Dice atk = new Dice(player.NumOfDice, player.SideOfDice, player.DefModifier);
-            return atk.Throw(player.NumOfDice, player.SideOfDice, player.DefModifier);
+            Dice def = new Dice(player.NumOfDice, player.SideOfDice, player.DefModifier);
+            string diceString = def.ToString();
+            return (def.Throw(player.NumOfDice, player.SideOfDice, player.DefModifier), diceString);
         }
-        public int EnemyAttack(Enemy enemy)
+        public (int enemyAttack, string diceString) EnemyAttack(Enemy enemy)
         {
             Dice def = new Dice(enemy.NumOfAtkDice, enemy.SideOfAtkDice, enemy.AtkModifier);
-            return def.Throw(enemy.NumOfAtkDice, enemy.SideOfAtkDice, enemy.AtkModifier);
+            string diceString = def.ToString();
+            return (def.Throw(enemy.NumOfAtkDice, enemy.SideOfAtkDice, enemy.AtkModifier), diceString);
         }
-        public int EnemyDefend(Enemy enemy)
+        public (int enemyDefence, string diceString) EnemyDefend(Enemy enemy)
         {
             Dice def = new Dice(enemy.NumOfDefDice, enemy.SideOfDefDice, enemy.DefModifier);
-            return def.Throw(enemy.NumOfDefDice, enemy.SideOfDefDice, enemy.DefModifier);
+            string diceString = def.ToString();
+
+            return (def.Throw(enemy.NumOfDefDice, enemy.SideOfDefDice, enemy.DefModifier), diceString);
         }
         public int CombatResult(int Atk, int Def)
         {
-            return Atk - Def;
+            if (Atk - Def < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Atk - Def;
+            }
+            
+        }
+
+        public void StatusWindow()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine($"Playername: {player.playerIcon} Health: {player.HealthPoints.ToString()} Turn: {turn.ToString()}      ");
+        }
+        public void CombatLog(string atkdie, string defdie)
+        {
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine($"Combat Log: The player did {atkdie} versus the enemy {defdie}");
+
         }
         public void TurnCycle()
         {
@@ -230,13 +273,20 @@ namespace Labb2
                         }
                         else if (CollisionUp(x, y) is Enemy enemy)
                         {
-                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+
+                            //
+                            enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
+                            CombatLog(PlayerAttack().diceString, EnemyDefend(enemy).diceString);
+                            //
+
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
                             }
-                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
-
+                            if (CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence) >= 0)
+                            {
+                                player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
+                            }
                         }
 
                         break;
@@ -249,13 +299,16 @@ namespace Labb2
                         }
                         else if (CollisionDown(x, y) is Enemy enemy)
                         {
-                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
+
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
                             }
-                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
-
+                            if (CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence) >= 0)
+                            {
+                                player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
+                            }
                         }
                         break;
 
@@ -267,12 +320,15 @@ namespace Labb2
                         }
                         else if (CollisionLeft(x, y) is Enemy enemy)
                         {
-                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
                             }
-                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
+                            if (CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence) >= 0)
+                            {
+                                player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
+                            }
 
                         }
                         break;
@@ -286,12 +342,16 @@ namespace Labb2
                         }
                         else if (CollisionRight(x, y) is Enemy enemy)
                         {
-                            enemy.Update(CombatResult(PlayerAttack(), EnemyDefend(enemy)));
+                            enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
                             }
-                            player.Update(CombatResult(EnemyAttack(enemy), PlayerDefend()));
+                            if (CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence) >= 0 )
+                            {
+                                player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
+                            }
+
                         }
                         break;
 
@@ -301,7 +361,8 @@ namespace Labb2
                     default:
                         break;
                 }
-
+                turn++;
+                StatusWindow();
                 EnemyMovement(x, y);
 
 

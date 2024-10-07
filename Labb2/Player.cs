@@ -12,7 +12,6 @@ namespace Labb2
     {
 
         public char playerIcon = '@';
-        // Player: HP = 100, AttackDice = 2d6+2, DefenceDice = 2d6+0
         public int HealthPoints { get; set; }
         public int NumOfDice { get; set; }
         public int SideOfDice { get; set; }
