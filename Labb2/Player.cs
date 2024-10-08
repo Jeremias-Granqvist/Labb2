@@ -30,6 +30,10 @@ namespace Labb2
             Draw();
         }
 
+        public override void Replace(char icon)
+        {
+            playerIcon = '@';
+        }
 
         public override void Draw()
         {

@@ -48,5 +48,10 @@ namespace Labb2.Elements
                 Draw();
             }
         }
+        public override void Replace(char icon)
+        {
+        }
+
     }
+
 }

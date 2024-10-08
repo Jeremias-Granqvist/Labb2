@@ -22,17 +22,17 @@ namespace Labb2
             this.Y = y;
         }
 
-        public int VerticalDistanceTo(Position position) => Math.Abs(position.X - this.X);
-        public int HorizontalDistanceTo(Position position) => Math.Abs(position.Y - this.Y);
+        public int VerticalDistanceTo(Position position) => Math.Abs(position.Y - this.Y);
+        public int HorizontalDistanceTo(Position position) => Math.Abs(position.X - this.X);
 
-        //public double DistanceTo(Position position)
-        //{
-        //    return (VerticalDistanceTo - HorizontalDistanceTo);
-        //}
-
-        //property för x och y, kan användas för att lagra positioner
-        //player.position.x
-        //snake.position.y
+        public bool DistanceTo(Position position)
+        {
+            if (VerticalDistanceTo(position) <= 5 && HorizontalDistanceTo(position) <= 5)
+            {
+                return true;
+            }
+            return false;
+        }
 
         //metod för att ta in en annan position (pythagoras sats)
     }

@@ -12,6 +12,7 @@
         {
            
         }
+        public abstract void Replace(char icon);
 
         public LevelElement(int x, int y)
         {

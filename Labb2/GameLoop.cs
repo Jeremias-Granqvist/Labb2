@@ -250,7 +250,7 @@ namespace Labb2
         public void StatusWindow()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine($"Playername: {player.playerIcon} {Console.ForegroundColor = ConsoleColor.Red} Health: {player.HealthPoints.ToString()} {Console.ForegroundColor = ConsoleColor.Cyan} Turn: {turn.ToString()}      ");
+            Console.WriteLine($"Playername: {player.playerIcon} Health: {player.HealthPoints.ToString()} Turn: {turn.ToString()}      ");
             Console.ResetColor();
         }
         public void CombatLog(string atkdie, string defdie, int combatResult)
@@ -267,16 +267,28 @@ namespace Labb2
             Console.WriteLine($"Enemy Combat Log: The enemy rolled {atkdie} attack versus the players {defdie} defence roll and deals {combatResult} damage ");
             Console.ResetColor();
         }
+
+        public void Visibility()
+        {
+            for (int i = 0; i < _levelData.Elements.Count; i++)
+            {
+                if (Position.DistanceTo(player.Position))
+                {
+
+                }
+
+            }
+
+        }
         public void TurnCycle()
         {
-
             int x = player.Position.X;
             int y = player.Position.Y;
             bool isRunning = true;
             do
             {
+                Visibility();
                 keyInput = Console.ReadKey(true);
-
                 switch (keyInput.Key)
                 {
                     case ConsoleKey.UpArrow:
@@ -287,12 +299,8 @@ namespace Labb2
                         }
                         else if (CollisionUp(x, y) is Enemy enemy)
                         {
-
-                            //
                             enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
                             CombatLog(PlayerAttack().diceString, EnemyDefend(enemy).diceString, CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
-                            //
-
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
@@ -303,9 +311,7 @@ namespace Labb2
                                 player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
                             }
                         }
-
                         break;
-
                     case ConsoleKey.DownArrow:
                         if (CollisionDown(x, y) is null)
                         {
@@ -316,7 +322,6 @@ namespace Labb2
                         {
                             enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
                             CombatLog(PlayerAttack().diceString, EnemyDefend(enemy).diceString, CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
-
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
@@ -328,7 +333,6 @@ namespace Labb2
                             }
                         }
                         break;
-
                     case ConsoleKey.LeftArrow:
                         if (CollisionLeft(x, y) is null)
                         {
@@ -352,7 +356,6 @@ namespace Labb2
 
                         }
                         break;
-
                     case ConsoleKey.RightArrow:
                         CollisionRight(x, y);
                         if (CollisionRight(x, y) is null)
@@ -364,7 +367,6 @@ namespace Labb2
                         {
                             enemy.Update(CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
                             CombatLog(PlayerAttack().diceString, EnemyDefend(enemy).diceString, CombatResult(PlayerAttack().playerAttack, EnemyDefend(enemy).enemyDefence));
-
                             if (enemy.HealthPoints <= 0)
                             {
                                 _levelData.Elements.Remove(enemy);
@@ -373,11 +375,9 @@ namespace Labb2
                             {
                                 CombatLogLineTwo(EnemyAttack(enemy).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
                                 player.Update(CombatResult(EnemyAttack(enemy).enemyAttack, PlayerDefend().playerDefence));
-
                             }
                         }
                         break;
-
                     case ConsoleKey.Escape:
                         isRunning = !isRunning;
                         break;

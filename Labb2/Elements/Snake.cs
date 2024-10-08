@@ -34,5 +34,10 @@ namespace Labb2.Elements
         {
             HealthPoints = HealthPoints - combatResult;
         }
+
+        public override void Replace(char icon)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
