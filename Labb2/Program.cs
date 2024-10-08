@@ -4,7 +4,7 @@ LevelData game = new LevelData();
 game.Load($"\\Levels\\Level1.txt");
 GameLoop turn = new GameLoop(game);
 
-turn.CombatLog(null, null);
+
 
 foreach (var element in game.Elements)
 {
