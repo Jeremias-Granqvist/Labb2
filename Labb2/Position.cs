@@ -31,7 +31,7 @@ namespace Labb2
             {
                 return true;
             }
-            return false;
+            return false;                   // måste inte läsa in hela filen? bara läsa in baserat på true/false? 
         }
 
         //metod för att ta in en annan position (pythagoras sats)

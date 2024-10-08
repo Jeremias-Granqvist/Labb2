@@ -315,7 +315,7 @@ namespace Labb2
                     case ConsoleKey.DownArrow:
                         if (CollisionDown(x, y) is null)
                         {
-                            y = MovePlayerDown(x, y);
+                            y = MovePlayerDown(x, y);       //kanske lägga in playerupdate för yposition? 
                             player.Draw();
                         }
                         else if (CollisionDown(x, y) is Enemy enemy)
