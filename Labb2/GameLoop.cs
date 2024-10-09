@@ -54,24 +54,21 @@ namespace Labb2
 
         public int MoveEnemyUp(LevelElement element, int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             element.Position = new Position(element.Position.X, element.Position.Y - 1);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.Y;
         }
         public int MoveEnemyDown(LevelElement element, int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             element.Position = new Position(element.Position.X, element.Position.Y + 1);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.Y;
         }
         public int MoveEnemyRight(LevelElement element, int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             element.Position = new Position(element.Position.X + 1, element.Position.Y);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.X;
@@ -79,8 +76,7 @@ namespace Labb2
         public int MoveEnemyLeft(LevelElement element, int x, int y)
         {
 
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             element.Position = new Position(element.Position.X - 1, element.Position.Y);
             Console.SetCursorPosition(element.Position.X, element.Position.Y);
             return element.Position.X;
@@ -180,37 +176,38 @@ namespace Labb2
         }
         public int MovePlayerUp(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             player.Position = new Position(player.Position.X, player.Position.Y - 1);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.Y;
         }
         public int MovePlayerDown(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             player.Position = new Position(player.Position.X, player.Position.Y + 1);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.Y;
         }
         public int MovePlayerRight(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             player.Position = new Position(player.Position.X + 1, player.Position.Y);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.X;
         }
         public int MovePlayerLeft(int x, int y)
         {
-
-            Console.SetCursorPosition(x, y);
-            Console.Write(' ');
+            ErasePreviousPosition(x, y);
             player.Position = new Position(player.Position.X - 1, player.Position.Y);
             Console.SetCursorPosition(player.Position.X, player.Position.Y);
             return player.Position.X;
         }
+        public void ErasePreviousPosition(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+        }
+
         public (int playerAttack, string diceString) PlayerAttack()
         {
             Dice atk = new Dice(player.NumOfDice, player.SideOfDice, player.AtkModifier);
@@ -304,7 +301,6 @@ namespace Labb2
                         if (CollisionUp(x, y) is null)
                         {
                             y = MovePlayerUp(x, y);
-                            player.Draw();
                         }
                         else if (CollisionUp(x, y) is Enemy enemy)
                         {
@@ -324,8 +320,7 @@ namespace Labb2
                     case ConsoleKey.DownArrow:
                         if (CollisionDown(x, y) is null)
                         {
-                            y = MovePlayerDown(x, y);       //kanske lägga in playerupdate för yposition? 
-                            player.Draw();
+                            y = MovePlayerDown(x, y);
                         }
                         else if (CollisionDown(x, y) is Enemy enemy)
                         {
@@ -346,7 +341,6 @@ namespace Labb2
                         if (CollisionLeft(x, y) is null)
                         {
                             x = MovePlayerLeft(x, y);
-                            player.Draw();
                         }
                         else if (CollisionLeft(x, y) is Enemy enemy)
                         {
@@ -370,7 +364,6 @@ namespace Labb2
                         if (CollisionRight(x, y) is null)
                         {
                             x = MovePlayerRight(x, y);
-                            player.Draw();
                         }
                         else if (CollisionRight(x, y) is Enemy enemy)
                         {
@@ -393,6 +386,7 @@ namespace Labb2
                     default:
                         break;
                 }
+                player.Draw();
                 Visibility();
                 turn++;
                 StatusWindow();
