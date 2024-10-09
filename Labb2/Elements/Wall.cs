@@ -29,5 +29,9 @@ namespace Labb2.Elements
                 Console.Write(' ');
             }
         }
+
+        public override void Update(LevelElement element, int x, int y)
+        {
+        }
     }
 }

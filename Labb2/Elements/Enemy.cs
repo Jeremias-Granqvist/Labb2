@@ -22,6 +22,11 @@ namespace Labb2.Elements
         public override void Replace(char icon)
         {
         }
-        public abstract void Update(int combatResult);
+        public abstract void CombatUpdate(int combatResult);
+        public override void Update(LevelElement element, int x, int y)
+        {
+
+        }
     }
+
 }

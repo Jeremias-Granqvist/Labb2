@@ -42,7 +42,7 @@ namespace Labb2
             Console.ResetColor();
         }
 
-        public void Update(int combatResult)
+        public void CombatUpdate(int combatResult)
         {
             HealthPoints = HealthPoints - combatResult;
 
@@ -50,6 +50,10 @@ namespace Labb2
             {
                 Console.WriteLine("Game Over");
             }
+        }
+        public override void Update(LevelElement element, int x, int y)
+        {
+
         }
     }
 }

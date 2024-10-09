@@ -25,11 +25,11 @@ namespace Labb2
 
             Action nextMove = input switch
             {
-                "down" => () => pl.Update(2),
-                "up" => () => pl.Update(3),
+                "down" => () => pl.CombatUpdate(2),
+                "up" => () => pl.CombatUpdate(3),
                 "left" => () => något(pl),
                 "hej" => () => hej(input),
-                _ => () => pl.Update(4)
+                _ => () => pl.CombatUpdate(4)
             };
 
             nextMove();
@@ -39,7 +39,7 @@ namespace Labb2
         {
             if (true)
             {
-                pl.Update(7);
+                pl.CombatUpdate(7);
             }
             
         }

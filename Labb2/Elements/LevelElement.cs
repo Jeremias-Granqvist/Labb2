@@ -17,6 +17,8 @@
         public LevelElement(int x, int y)
         {
         }
+        public abstract void Update(LevelElement element, int x, int y);
+
         public virtual void Draw()
         {
 

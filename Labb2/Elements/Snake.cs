@@ -37,7 +37,7 @@ namespace Labb2.Elements
                 Console.Write(' ');
             }
         }
-        public override void Update(int combatResult)
+        public override void CombatUpdate(int combatResult)
         {
             HealthPoints = HealthPoints - combatResult;
         }
@@ -45,6 +45,11 @@ namespace Labb2.Elements
         public override void Replace(char icon)
         {
             throw new NotImplementedException();
+        }
+
+        public override void Update(LevelElement element, int x, int y)
+        {
+
         }
     }
 }
