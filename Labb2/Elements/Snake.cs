@@ -27,8 +27,15 @@ namespace Labb2.Elements
         }
         public override void Draw()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(snakeIcon);
+            if (IsVisible)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(snakeIcon);
+            }
+            else
+            {
+                Console.Write(' ');
+            }
         }
         public override void Update(int combatResult)
         {

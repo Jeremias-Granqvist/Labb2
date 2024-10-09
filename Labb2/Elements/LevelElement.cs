@@ -21,5 +21,6 @@
         {
 
         }
+        public bool IsVisible { get; set; } = false;
     }
 }

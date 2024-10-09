@@ -1,5 +1,6 @@
 ﻿using Labb2.Elements;
 using System;
+using System.Data;
 using System.Xml.Linq;
 
 namespace Labb2
@@ -272,22 +273,30 @@ namespace Labb2
         {
             for (int i = 0; i < _levelData.Elements.Count; i++)
             {
-                if (Position.DistanceTo(player.Position))
+                if (Position.DistanceTo(_levelData.Elements[i].Position, player.Position) <= 5 )
                 {
+                    _levelData.Elements[i].IsVisible = true;
+                }
+                if (_levelData.Elements[i] is Enemy && Position.DistanceTo(_levelData.Elements[i].Position, player.Position) <= 5)
+                {
+                    _levelData.Elements[i].IsVisible = true;
+                }
+                else if (_levelData.Elements[i] is Enemy && Position.DistanceTo(_levelData.Elements[i].Position, player.Position) >= 5)
+                {
+                    _levelData.Elements[i].IsVisible = false;
 
                 }
-
+                Console.SetCursorPosition(_levelData.Elements[i].Position.X, _levelData.Elements[i].Position.Y);
+                _levelData.Elements[i].Draw();
             }
-
         }
         public void TurnCycle()
-        {
+        {            
             int x = player.Position.X;
             int y = player.Position.Y;
             bool isRunning = true;
             do
             {
-                Visibility();
                 keyInput = Console.ReadKey(true);
                 switch (keyInput.Key)
                 {
@@ -384,10 +393,10 @@ namespace Labb2
                     default:
                         break;
                 }
+                Visibility();
                 turn++;
                 StatusWindow();
                 EnemyMovement(x, y);
-
 
             } while (isRunning);
         }

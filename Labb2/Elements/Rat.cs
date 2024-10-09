@@ -32,9 +32,16 @@ namespace Labb2.Elements
 
         public override void Draw()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(ratIcon);
-            Console.ResetColor();
+            if (IsVisible)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(ratIcon);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write(' ');
+            }
         }
 
         public override void Update(int combatResult)

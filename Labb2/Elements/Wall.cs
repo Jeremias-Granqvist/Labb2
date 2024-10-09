@@ -19,8 +19,15 @@ namespace Labb2.Elements
         }
         public override void Draw()
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write(wallIcon);
+            if (IsVisible)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(wallIcon);
+            }
+            else
+            {
+                Console.Write(' ');
+            }
         }
     }
 }
