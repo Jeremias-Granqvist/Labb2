@@ -85,58 +85,56 @@ namespace Labb2
         {
             foreach (var element in _levelData.Elements)
             {
-//                element.
-                    
 
-                if (element is Wall)
+                if (element is Wall || element is null)
                 {
                     continue;
                 }
                 if (element is Rat)
                 {
-                    element.Update(element, x, y);
+                    //element.Update(element, x, y);
 
-                    //Dice dice = new Dice(4);
-                    //if (dice.DiceResult == 1 && CollisionUp(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y - 1 == y))
-                    //{
-                    //    y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
-                    //    element.Draw();
-                    //}
-                    //else if (CollisionUp(element.Position.X, element.Position.Y) is Player player)
-                    //{
-                    //    player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //    CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //}
-                    //if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
-                    //{
-                    //    x = MoveEnemyRight(element, element.Position.X, element.Position.Y);
-                    //    element.Draw();
-                    //}
-                    //else if (CollisionRight(element.Position.X, element.Position.Y) is Player player)
-                    //{
-                    //    player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //    CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //}
-                    //if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
-                    //{
-                    //    y = MoveEnemyDown(element, element.Position.X, element.Position.Y);
-                    //    element.Draw();
-                    //}
-                    //else if (CollisionDown(element.Position.X, element.Position.Y) is Player player)
-                    //{
-                    //    player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //    CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //}
-                    //if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
-                    //{
-                    //    x = MoveEnemyLeft(element, element.Position.X, element.Position.Y);
-                    //    element.Draw();
-                    //}
-                    //else if (CollisionLeft(element.Position.X, element.Position.Y) is Player player)
-                    //{
-                    //    player.Update(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //    CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
-                    //}
+                    Dice dice = new Dice(4);
+                    if (dice.DiceResult == 1 && CollisionUp(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y - 1 == y))
+                    {
+                        y = MoveEnemyUp(element, element.Position.X, element.Position.Y);
+                        element.Draw();
+                    }
+                    else if (CollisionUp(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.CombatUpdate(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                        CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 2 && CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
+                    {
+                        x = MoveEnemyRight(element, element.Position.X, element.Position.Y);
+                        element.Draw();
+                    }
+                    else if (CollisionRight(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.CombatUpdate(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                        CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 3 && CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
+                    {
+                        y = MoveEnemyDown(element, element.Position.X, element.Position.Y);
+                        element.Draw();
+                    }
+                    else if (CollisionDown(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.CombatUpdate(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                        CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
+                    if (dice.DiceResult == 4 && CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
+                    {
+                        x = MoveEnemyLeft(element, element.Position.X, element.Position.Y);
+                        element.Draw();
+                    }
+                    else if (CollisionLeft(element.Position.X, element.Position.Y) is Player player)
+                    {
+                        player.CombatUpdate(CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                        CombatLogLineTwo(EnemyAttack((Enemy)element).diceString, PlayerDefend().diceString, CombatResult(EnemyAttack((Enemy)element).enemyAttack, PlayerDefend().playerDefence));
+                    }
 
 
 

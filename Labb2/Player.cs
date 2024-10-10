@@ -29,7 +29,10 @@ namespace Labb2
             Console.SetCursorPosition(Position.X, Position.Y);
             Draw();
         }
+        public Player(LevelElement element, int x, int y)
+        {
 
+        }
         public override void Replace(char icon)
         {
             playerIcon = '@';
@@ -52,6 +55,10 @@ namespace Labb2
             }
         }
         public override void Update(LevelElement element, int x, int y)
+        {
+
+        }
+        public void Update(int x, int y)
         {
 
         }

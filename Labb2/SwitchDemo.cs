@@ -12,7 +12,7 @@ namespace Labb2
 
         //
         //
-        //
+        //      annat test för att flytta rad 98 och framåt i gameloop
         //      exempel för rad 98 i gameloop (enemy is Rat)
         //
         //

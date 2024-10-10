@@ -3,8 +3,6 @@
     abstract class LevelElement
     {
 
-        //ska ha property för X
-        //ska ha property för Y
         public Position Position { get; set; }
 
 
