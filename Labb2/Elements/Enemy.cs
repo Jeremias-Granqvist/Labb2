@@ -23,7 +23,7 @@ namespace Labb2.Elements
         {
         }
         public abstract void CombatUpdate(int combatResult);
-        public override void Update(LevelElement element, int x, int y)
+        public override void Update(int x, int y)
         {
 
         }

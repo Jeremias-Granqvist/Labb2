@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Labb2
+﻿namespace Labb2
 {
     class Player : LevelElement
     {
-
+        private GameLoop _gameloop;
         public char playerIcon = '@';
         public int HealthPoints { get; set; }
         public int NumOfDice { get; set; }
@@ -29,10 +21,6 @@ namespace Labb2
             Console.SetCursorPosition(Position.X, Position.Y);
             Draw();
         }
-        public Player(LevelElement element, int x, int y)
-        {
-
-        }
         public override void Replace(char icon)
         {
             playerIcon = '@';
@@ -45,20 +33,16 @@ namespace Labb2
             Console.ResetColor();
         }
 
-        public void CombatUpdate(int combatResult)
+        public void CombatUpdate(int combatResult, GameLoop gameLoop)
         {
-            HealthPoints = HealthPoints - combatResult;
-
+            _gameloop = gameLoop;
+            HealthPoints -= combatResult;
             if (HealthPoints <= 0)
             {
-                Console.WriteLine("Game Over");
+                _gameloop.HandleGameOver();
             }
         }
-        public override void Update(LevelElement element, int x, int y)
-        {
-
-        }
-        public void Update(int x, int y)
+        public override void Update(int x, int y)
         {
 
         }

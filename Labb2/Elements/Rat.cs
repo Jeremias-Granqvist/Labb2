@@ -1,34 +1,32 @@
-﻿namespace Labb2.Elements
+﻿using System.Numerics;
+
+namespace Labb2.Elements
 {
     class Rat : Enemy
     {
-        //private LevelData _levelData;
-        //Player player;
-
-        //private GameLoop turn;
 
         public char ratIcon = 'r';
+        public LevelData ElementsList { get; set; }
+        private LevelData _elements;
+        LevelData _levelData;
+        private GameController _gameController;
+        GameLoop _gameLoop;
+
 
         public Rat()
         {
         }
-
-        //public YourClass(GameLoop turn)
-        //{
-        //    this.turn = turn;
-        //}
-        public Rat(int x, int y)
+        public Rat(int x, int y, LevelData levelData, GameController gameController)
         {
+            _gameController = gameController;
+            _levelData = levelData;
 
             Position = new Position(x, y);
             this.Name = ratIcon;
-
             this.HealthPoints = 10;
-
             this.NumOfAtkDice = 1;
             this.SideOfAtkDice = 6;
             this.AtkModifier = 3;
-
             this.NumOfDefDice = 1;
             this.SideOfDefDice = 6;
             this.DefModifier = 1;
@@ -61,59 +59,58 @@
             {
                 Position = new Position(0, 0);
                 ratIcon = ' ';
-                Draw();
+                _gameController.RemoveEnemy(this);
+
             }
         }
+        public override void Update(int x, int y)
+        {
+            Dice dice = new Dice(4); // Corrected to 4 sides
+            int newX = x;
+            int newY = y;
+            _gameController.ErasePreviousPosition(this.Position.X, this.Position.Y);
 
+            // Determine new position based on the dice result
+            switch (dice.DiceResult)
+            {
+                case 1: newY--; break; // Up
+                case 2: newX++; break; // Right
+                case 3: newY++; break; // Down
+                case 4: newX--; break; // Left
+            }
 
-        // jag har lagt över 20 timmar på få den här skiten att funka och det går fan inte.
+            // Check for collision with the player
+            Player player = _levelData.Elements.OfType<Player>().FirstOrDefault();
+            if (player != null && player.Position.X == newX && player.Position.Y == newY)
+            {
+                // Combat logic
+                player.Update(_gameController.CombatResult(_gameController.EnemyAttack(this).enemyAttack, _gameController.PlayerDefend().playerDefence), _gameController.PlayerDefend().playerDefence);
+                _gameController.CombatLogLineTwo(_gameController.EnemyAttack(this).diceString, _gameController.PlayerDefend().diceString, _gameController.CombatResult(_gameController.EnemyAttack(this).enemyAttack, _gameController.PlayerDefend().playerDefence));
+            }
 
-        //public override void Update(LevelElement element, int x, int y)             /////kaos här
-        //{
-        //    Dice dice = new Dice(4);
-        //    if (dice.DiceResult == 1 && turn.CollisionUp(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y - 1 == y))
-        //    {
-        //        y = turn.MoveEnemyUp(element, element.Position.X, element.Position.Y);
-        //        element.Draw();
-        //    }
-        //    else if (turn.CollisionUp(element.Position.X, element.Position.Y) is Player player)
-        //    {
-        //        player.Update(turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence), turn.PlayerDefend().playerDefence);
-        //        turn.CombatLogLineTwo(turn.EnemyAttack((Enemy)element).diceString, turn.PlayerDefend().diceString, turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence));
-        //    }
-        //    if (dice.DiceResult == 2 && turn.CollisionRight(element.Position.X, element.Position.Y) == null && !(element.Position.X + 1 == x && element.Position.Y == y))
-        //    {
-        //        x = turn.MoveEnemyRight(element, element.Position.X, element.Position.Y);
-        //        element.Draw();
-        //    }
-        //    else if (turn.CollisionRight(element.Position.X, element.Position.Y) is Player player)
-        //    {
-        //        player.Update(turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence), turn.PlayerDefend().playerDefence);
-        //        turn.CombatLogLineTwo(turn.EnemyAttack((Enemy)element).diceString, turn.PlayerDefend().diceString, turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence));
-        //    }
-        //    if (dice.DiceResult == 3 && turn.CollisionDown(element.Position.X, element.Position.Y) == null && !(element.Position.X == x && element.Position.Y + 1 == y))
-        //    {
-        //        y = turn.MoveEnemyDown(element, element.Position.X, element.Position.Y);
-        //        element.Draw();
-        //    }
-        //    else if (turn.CollisionDown(element.Position.X, element.Position.Y) is Player player)
-        //    {
-        //        player.Update(turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence), turn.PlayerDefend().playerDefence);
-        //        turn.CombatLogLineTwo(turn.EnemyAttack((Enemy)element).diceString, turn.PlayerDefend().diceString, turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence));
-        //    }
-        //    if (dice.DiceResult == 4 && turn.CollisionLeft(element.Position.X, element.Position.Y) == null && !(element.Position.X == x - 1 && element.Position.Y == y))
-        //    {
-        //        x = turn.MoveEnemyLeft(element, element.Position.X, element.Position.Y);
-        //        element.Draw();
-        //    }
-        //    else if (turn.CollisionLeft(element.Position.X, element.Position.Y) is Player player)
-        //    {
-        //        player.Update(turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence), turn.PlayerDefend().playerDefence);
-        //        turn.CombatLogLineTwo(turn.EnemyAttack((Enemy)element).diceString, turn.PlayerDefend().diceString, turn.CombatResult(turn.EnemyAttack((Enemy)element).enemyAttack, turn.PlayerDefend().playerDefence));
-        //    }
+                // Check for collisions with walls
+                if (_gameController.CollisionAt(newX, newY) == null) // Up
+                {
+                    this.Position = new Position(newX, newY);
+                }
+                else if (_gameController.CollisionAt(newX, newY) == null) // Right
+                {
+                    this.Position = new Position(newX, newY);
+                }
+                else if (_gameController.CollisionAt(newX, newY) == null) // Down
+                {
+                    this.Position = new Position(newX, newY);
+                }
+                else if (_gameController.CollisionAt(newX, newY) == null) // Left
+                {
+                    this.Position = new Position(newX, newY);
+                }
+
+        }
 
     }
 }
+
 
 
 

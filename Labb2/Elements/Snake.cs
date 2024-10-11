@@ -10,11 +10,15 @@ namespace Labb2.Elements
     class Snake :Enemy
     {
         public char snakeIcon = 's';
+        GameController _gameController;
+        LevelData _levelData;
         public Snake()
         {
         }
-        public Snake(int x, int y)
+        public Snake(int x, int y,LevelData levelData, GameController gameController)
         {
+            _gameController = gameController;
+            _levelData = levelData;
             Position = new Position(x, y);
             this.Name = snakeIcon;
             this.HealthPoints = 25;
@@ -46,9 +50,49 @@ namespace Labb2.Elements
         {
             throw new NotImplementedException();
         }
-
-        public override void Update(LevelElement element, int x, int y)
+        public bool IsPlayerNearby(Player player, Snake element)
         {
+            return Math.Abs(player.Position.X - element.Position.X) + Math.Abs(player.Position.Y - element.Position.Y) <= 2;
+
+        }
+        private void MoveAwayFromPlayer(Player player)
+        {
+            int newX = this.Position.X;
+            int newY = this.Position.Y;
+
+           
+            if (player.Position.Y > this.Position.Y) 
+            {
+                newY--; 
+            }
+            else if (player.Position.X < this.Position.X) 
+            {
+                newX++; 
+            }
+            else if (player.Position.Y < this.Position.Y) 
+            {
+                newY++; 
+            }
+            else if (player.Position.X > this.Position.X) 
+            {
+                newX--; 
+            }
+
+            // Update position if there's no collision
+            if (_gameController.CollisionAt(newX, newY) == null)
+            {
+                this.Position = new Position(newX, newY);
+            }
+        }
+        public override void Update(int x, int y)
+        {
+            Player player = _levelData.Elements.OfType<Player>().FirstOrDefault();
+            _gameController.ErasePreviousPosition(this.Position.X, this.Position.Y);
+
+            if (player != null && IsPlayerNearby(player, this))
+            {
+                MoveAwayFromPlayer(player);
+            }
 
         }
     }

@@ -30,7 +30,7 @@ namespace Labb2.Elements
             }
         }
 
-        public override void Update(LevelElement element, int x, int y)
+        public override void Update(int x, int y)
         {
         }
     }

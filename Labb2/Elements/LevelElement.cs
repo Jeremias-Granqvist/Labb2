@@ -15,12 +15,13 @@
         public LevelElement(int x, int y)
         {
         }
-        public abstract void Update(LevelElement element, int x, int y);
+        public abstract void Update(int x, int y);
 
         public virtual void Draw()
         {
 
         }
-        public bool IsVisible { get; set; } = false;
+        public bool IsVisible { get; set; } = false; 
+
     }
 }

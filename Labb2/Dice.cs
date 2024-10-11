@@ -26,7 +26,7 @@ namespace Labb2
         }
         public Dice(int sidesOfDice)
         {
-            DiceResult = randomDiceResult.Next(0, sidesOfDice+1); 
+            DiceResult = randomDiceResult.Next(1, sidesOfDice+1); 
         }
 
 
